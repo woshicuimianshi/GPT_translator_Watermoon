@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Translator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Text Translator</h1>
+    <label>GPT模型设置：</label>
+    <div style="display: flex; gap: 40px; margin: 0 20px;">
+        <div>
+            <label for="apiKey">API Key:</label>
+            <input type="password" id="apiKey" placeholder="Enter your API key" style="margin-right: 15px;">
+        </div>
+
+        <div>
+            <label for="baseUrl">Base URL:</label>
+            <input type="text" id="baseUrl" placeholder="Enter the base URL" style="margin-right: 15px;">
+        </div>
+
+        <div>
+            <label for="modelName">Model Name:</label>
+            <input type="text" id="modelName" placeholder="Enter the model name" style="margin-right: 15px;">
+        </div>
+    </div>
+    <div style="display: flex; gap: 40px; margin: 20px 20px;">
+        <div>
+            <label for="firstLanguage">语种一(first-language):</label>
+            <input type="text" id="firstLanguage" placeholder="Enter first language" style="margin-right: 15px;">
+        </div>
+
+        <div>
+            <label for="secondLanguage">语种二(second-language):</label>
+            <input type="text" id="secondLanguage" placeholder="Enter second language" style="margin-right: 15px;">
+        </div>
+    </div>
+
+    <div style="margin: 20px 20px;">
+        <label for="promptText">GPT提示语(prompt):</label>
+        <textarea id="promptText" rows="4" style="width: 100%; margin-top: 10px;"></textarea>
+    </div>
+    <hr style="border: 1px solid black; width: 100%;">
+
+    <div class="main-container">
+        <div>
+            <h2>源文本</h2>
+            <div class="upload-controls">
+                <input type="file" id="fileInput" style="display: none;">
+                <button class="upload" id="uploadButton">上传文本文件 (最大10MB)</button>
+            </div>
+            <div class="textarea-wrapper">
+                <textarea id="sourceText" rows="15"></textarea>
+            </div>
+        </div>
+        
+        <div class="translation-options">
+            <label>
+                <input type="checkbox" id="bilingualOutput"> 双语输出
+            </label>
+        </div>
+        <div style="text-align: center; margin: 20px 0;">
+            <button onclick="translateText()" class="translate-btn">翻译</button>
+        </div>
+
+
+    </div>
+
+    <div class="status-container">
+        <div class="status-header">
+            <h2>GPT 状态:</h2>
+            <div id="statusSpinner" class="loading-spinner" style="display: none;"></div>
+        </div>
+        <pre id="status"></pre>
+        <div>
+            <h2>翻译结果:</h2>
+            <pre id="translationResult"></pre>
+        </div>
+    </div>
+
+    <button id="downloadBtn" class="download-btn" style="display: none;" onclick="downloadTranslation()">
+        下载翻译结果
+    </button>
+
+    <script src="translator.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
