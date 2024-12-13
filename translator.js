@@ -4,6 +4,7 @@ class TextTranslator {
         this.baseUrl = baseUrl;
         this.modelName = modelName;
         this.statusElement = document.getElementById('status');
+        this.resultElement = document.getElementById('translationResult');
     }
 
     updateStatus(message) {
@@ -28,10 +29,7 @@ class TextTranslator {
                 },
                 body: JSON.stringify({
                     model: this.modelName,
-                    messages: [{
-                        role: "user",
-                        content: messages
-                    }]
+                    messages: messages
                 })
             });
 
@@ -42,7 +40,7 @@ class TextTranslator {
 
             const data = await response.json();
             const answer = data.choices[0].message.content;
-            this.updateStatus(`Response received successfully for prompt: ...${messages.substring(0,25)}...`);
+            this.updateStatus(`Response received successfully for prompt: ...${messages[1].content.substring(0,25)}...`);
             return answer.trim();
         } catch (e) {
             this.updateStatus(`Error during API call: ${e}`);
@@ -52,38 +50,46 @@ class TextTranslator {
 
     async translate(text, bilingual = false) {
         this.updateStatus('Starting translation...');
+        this.resultElement.textContent = '';
+        this.statusElement.classList.add('processing');
         
-        const firstLanguage = document.getElementById('firstLanguage').value;
-        const secondLanguage = document.getElementById('secondLanguage').value;
-        const resultElement = document.getElementById('translationResult');
-        resultElement.textContent = '';
-
         let prepromptText = document.getElementById('promptText').value;
-        prepromptText = prepromptText.replaceAll('[first-language]', firstLanguage);
-        prepromptText = prepromptText.replaceAll('[second-language]', secondLanguage);
-
+        
         // 分段处理
         const CHUNK_SIZE = 1500; // 约 1500 字符一段
         const chunks = this.splitTextIntoChunks(text, CHUNK_SIZE);
         let translations = [];
 
-        // 逐段翻译
         for (let i = 0; i < chunks.length; i++) {
             this.updateStatus(`Translating chunk ${i + 1}/${chunks.length}...`);
             
-            let promptText = `${prepromptText}\n${chunks[i]}`;
-            const response = await this.askLLM(promptText);
+            const messages = [
+                {
+                    role: "system",
+                    content: prepromptText
+                },
+                {
+                    role: "user",
+                    content: chunks[i]
+                }
+            ];
+            
+            const response = await this.askLLM(messages);
             const cleanResponse = this.clean(response);
             const translatedChunk = bilingual ? 
                 `Original:\n${chunks[i]}\n\nTranslation:\n${cleanResponse}\n` : 
                 `${cleanResponse}\n`;
             
             // 实时添加翻译结果到页面，自动滚动到底部
-            resultElement.textContent += translatedChunk;
-            resultElement.scrollTop = resultElement.scrollHeight;
+            this.resultElement.textContent += translatedChunk;
+            this.resultElement.scrollTop =  this.resultElement.scrollHeight;
+            this.resultElement.classList.add('processing');
             translations.push(translatedChunk);
         }
         const combinedTranslation = translations.join('');
+        this.statusElement.classList.remove('processing');
+        this.statusElement.classList.add('completed');
+        this.resultElement.classList.remove('processing');
         return combinedTranslation;
     }
 

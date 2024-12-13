@@ -25,17 +25,6 @@
             <input type="text" id="modelName" placeholder="Enter the model name" style="margin-right: 15px;">
         </div>
     </div>
-    <div style="display: flex; gap: 40px; margin: 20px 20px;">
-        <div>
-            <label for="firstLanguage">语种一(first-language):</label>
-            <input type="text" id="firstLanguage" placeholder="Enter first language" style="margin-right: 15px;">
-        </div>
-
-        <div>
-            <label for="secondLanguage">语种二(second-language):</label>
-            <input type="text" id="secondLanguage" placeholder="Enter second language" style="margin-right: 15px;">
-        </div>
-    </div>
 
     <div style="margin: 20px 20px;">
         <label for="promptText">GPT提示语(prompt):</label>
@@ -45,10 +34,12 @@
 
     <div class="main-container">
         <div>
-            <h2>源文本</h2>
-            <div class="upload-controls">
-                <input type="file" id="fileInput" style="display: none;">
-                <button class="upload" id="uploadButton">上传文本文件 (最大10MB)</button>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="margin: 0;">源文本</h2>
+                <div class="upload-controls">
+                    <input type="file" id="fileInput" style="display: none;">
+                    <button class="upload" id="uploadButton">上传文本文件 (最大10MB)</button>
+                </div>
             </div>
             <div class="textarea-wrapper">
                 <textarea id="sourceText" rows="15"></textarea>

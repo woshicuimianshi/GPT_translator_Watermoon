@@ -19,8 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('apiKey').value = settings['api_key'] || '';
             document.getElementById('baseUrl').value = settings['base_url'] || '';
             document.getElementById('modelName').value = settings['model_name'] || '';
-            document.getElementById('firstLanguage').value = settings['first-language'] || '';
-            document.getElementById('secondLanguage').value = settings['second-language'] || '';
             document.getElementById('promptText').value = settings['prompt'] || '';
             document.getElementById('bilingualOutput').checked = settings['bilingual-output'] === 'True';
             document.getElementById('sourceText').value = settings['source-text'] || '';
