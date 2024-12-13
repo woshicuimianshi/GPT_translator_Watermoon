@@ -52,15 +52,16 @@ async function translateText() {
     const modelName = document.getElementById('modelName').value;
     const sourceText = document.getElementById('sourceText').value;
     const bilingual = document.getElementById('bilingualOutput').checked;
+    const resultElement = document.getElementById('translationResult');
 
     if (!sourceText.trim()) {
-        resultElement.textContent = 'Error: 请输入文字';
+        alert('Error: 请输入文字');
         return;
     }
 
     translator = new TextTranslator(apiKey, baseUrl, modelName);
     const statusElement = document.getElementById('status');
-    const resultElement = document.getElementById('translationResult');
+    
     const downloadBtn = document.getElementById('downloadBtn');
     
     statusElement.textContent = '';

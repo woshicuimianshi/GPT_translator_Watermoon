@@ -55,12 +55,8 @@ class TextTranslator {
         
         const firstLanguage = document.getElementById('firstLanguage').value;
         const secondLanguage = document.getElementById('secondLanguage').value;
-        const resultElement = document.getElementById('result');
-        
-        // 清空结果区域
-        if (resultElement) {
-            resultElement.textContent = '';
-        }
+        const resultElement = document.getElementById('translationResult');
+        resultElement.textContent = '';
 
         let prepromptText = document.getElementById('promptText').value;
         prepromptText = prepromptText.replaceAll('[first-language]', firstLanguage);
