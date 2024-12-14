@@ -52,7 +52,7 @@ class TextTranslator {
         this.updateStatus('Starting translation...');
         this.resultElement.textContent = '';
         this.statusElement.classList.add('processing');
-        
+        updateProgress(0);
         let prepromptText = document.getElementById('promptText').value;
         
         // 分段处理
@@ -73,7 +73,7 @@ class TextTranslator {
                     content: chunks[i]
                 }
             ];
-            
+            updateProgress((i + 1) / chunks.length * 50);
             const response = await this.askLLM(messages);
             const cleanResponse = this.clean(response);
             const translatedChunk = bilingual ? 
@@ -85,11 +85,13 @@ class TextTranslator {
             this.resultElement.scrollTop =  this.resultElement.scrollHeight;
             this.resultElement.classList.add('processing');
             translations.push(translatedChunk);
+            updateProgress((i + 1) / chunks.length * 100);
         }
         const combinedTranslation = translations.join('');
         this.statusElement.classList.remove('processing');
         this.statusElement.classList.add('completed');
         this.resultElement.classList.remove('processing');
+        updateProgress(100);
         return combinedTranslation;
     }
 
@@ -144,4 +146,14 @@ class TextTranslator {
         
         return chunks;
     }
+}
+
+function updateProgress(percentage) {
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    
+    progressBar.style.display = 'block';
+    progressFill.style.width = `${percentage}%`;
+    progressText.textContent = `${Math.round(percentage)}%`;
 }

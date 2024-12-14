@@ -19,9 +19,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('apiKey').value = settings['api_key'] || '';
             document.getElementById('baseUrl').value = settings['base_url'] || '';
             document.getElementById('modelName').value = settings['model_name'] || '';
-            document.getElementById('promptText').value = settings['prompt'] || '';
             document.getElementById('bilingualOutput').checked = settings['bilingual-output'] === 'True';
             document.getElementById('sourceText').value = settings['source-text'] || '';
+
+            // 加载 Prompt.txt 文件内容
+            try {
+                const promptResponse = await fetch('Prompt.txt');
+                if (promptResponse.ok) {
+                    const promptText = await promptResponse.text();
+                    document.getElementById('promptText').value = promptText;
+                }
+                else{
+                    alert('Error: 无法加载 Prompt.txt');
+                }
+            } catch (error) {
+                console.error('Error loading Prompt.txt:', error);
+            }
         }
     } catch (error) {
         console.error('Error loading config:', error);
@@ -40,7 +53,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (file) {
             const text = await file.text();
             document.getElementById('sourceText').value = text;
+            document.getElementById('downloadBtn').style.display = 'none';
+            document.getElementById('status').textContent = 'File Uploaded';
+            document.getElementById('progressBar').style.display = 'none';
         }
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const fileName = e.target.files[0] ? e.target.files[0].name : ' ';
+        document.getElementById('filePath').textContent = fileName;
     });
 });
 
@@ -61,7 +82,7 @@ async function translateText() {
     const statusElement = document.getElementById('status');
     
     const downloadBtn = document.getElementById('downloadBtn');
-    
+    downloadBtn.style.display = 'none';
     statusElement.textContent = '';
     resultElement.textContent = 'Translating...';
     

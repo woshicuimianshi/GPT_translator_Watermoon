@@ -14,9 +14,8 @@
 model_name = 你的模型名称
 api_key = 你的API密钥
 base_url = 你的API地址
-first-language = English
-second-language = Chinese
-prompt = 你的自定义提示语
+
+### 在 `Prompt.txt` 中配置提示语
 
 ## 开源协议
 

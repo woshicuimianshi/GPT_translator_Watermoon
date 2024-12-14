@@ -36,6 +36,7 @@
         <div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h2 style="margin: 0;">源文本</h2>
+                <label> <span id="filePath"> </span></label>
                 <div class="upload-controls">
                     <input type="file" id="fileInput" style="display: none;">
                     <button class="upload" id="uploadButton">上传文本文件 (最大10MB)</button>
@@ -54,14 +55,21 @@
         <div style="text-align: center; margin: 20px 0;">
             <button onclick="translateText()" class="translate-btn">翻译</button>
         </div>
-
+        <button id="downloadBtn" class="download-btn" style="display: none;" onclick="downloadTranslation()">
+            下载翻译结果
+        </button>
 
     </div>
 
     <div class="status-container">
         <div class="status-header">
             <h2>GPT 状态:</h2>
-            <div id="statusSpinner" class="loading-spinner" style="display: none;"></div>
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar" style="display: none;">
+                    <div id="progressFill" class="progress-fill"></div>
+                    <span id="progressText" class="progress-text">0%</span>
+                </div>
+            </div>
         </div>
         <pre id="status"></pre>
         <div>
@@ -69,10 +77,6 @@
             <pre id="translationResult"></pre>
         </div>
     </div>
-
-    <button id="downloadBtn" class="download-btn" style="display: none;" onclick="downloadTranslation()">
-        下载翻译结果
-    </button>
 
     <script src="translator.js"></script>
     <script src="main.js"></script>
