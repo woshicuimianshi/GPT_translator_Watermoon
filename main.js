@@ -108,4 +108,19 @@ function downloadTranslation() {
     URL.revokeObjectURL(url);
 }
 
+async function loadPrompt(filename) {
+    try {
+        const promptResponse = await fetch(filename);
+        if (promptResponse.ok) {
+            const promptText = await promptResponse.text();
+            document.getElementById('promptText').value = promptText;
+        }
+        else {
+            alert(`Error: 无法加载 ${filename}`);
+        }
+    } catch (error) {
+        console.error(`Error loading ${filename}:`, error);
+    }
+}
+
 

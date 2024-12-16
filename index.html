@@ -27,8 +27,14 @@
     </div>
 
     <div style="margin: 20px 20px;">
-        <label for="promptText">GPT提示语(prompt):</label>
-        <textarea id="promptText" rows="4" style="width: 100%; margin-top: 10px;"></textarea>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label for="promptText" style="margin: 0;">GPT提示语(prompt):</label>
+            <div>
+                <button onclick="loadPrompt('Prompt.txt')" class="upload">英译中</button>
+                <button onclick="loadPrompt('Prompt2.txt')" class="upload">中译英</button>
+            </div>
+        </div>
+        <textarea id="promptText" rows="4" style="width: 100%;"></textarea>
     </div>
     <hr style="border: 1px solid black; width: 100%;">
 
@@ -37,7 +43,7 @@
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h2 style="margin: 0;">源文本</h2>
                 <label> <span id="filePath"> </span></label>
-                <div class="upload-controls">
+                <div>
                     <input type="file" id="fileInput" style="display: none;">
                     <button class="upload" id="uploadButton">上传文本文件 (最大10MB)</button>
                 </div>

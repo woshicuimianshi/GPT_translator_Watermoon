@@ -117,7 +117,7 @@ class TextTranslator {
                 // 处理长段落
                 if (paragraph.length > chunkSize) {
                     // 按句子分割
-                    const sentences = paragraph.split(/(?<=[.!?])\s+/);
+                    const sentences = paragraph.split(/(?<=[.!?。！？；])\s*/);
                     let tempChunk = '';
                     
                     for (const sentence of sentences) {
